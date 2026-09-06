@@ -1,0 +1,9 @@
+*.o
+*.a
+*.so
+*.dylib
+*.dll
+*.lib
+test_qids
+build/
+.cache/
