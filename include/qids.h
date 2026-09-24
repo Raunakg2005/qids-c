@@ -2,9 +2,9 @@
  * @file qids.h
  * @brief C99/C++ Client API for Quantum Intrusion Detection System (QIDS).
  *
- * Provides carrier-grade constant-time cryptographic comparisons,
- * 64-bit Galois field Toeplitz LFSR universal hashing, and real-time
- * Wald Sequential Probability Ratio Test (SPRT) physical-layer threat detection.
+ * Constant-time comparisons, 64-bit Toeplitz LFSR universal hashing over
+ * GF(2) (portable C, no SIMD), and Wald Sequential Probability Ratio Test
+ * (SPRT) detection for physical-layer link monitoring.
  *
  * Copyright (c) 2026 QIDS. All Rights Reserved.
  * Strictly Proprietary and Confidential.
@@ -23,8 +23,8 @@ extern "C" {
 
 #define QIDS_VERSION_MAJOR 1
 #define QIDS_VERSION_MINOR 3
-#define QIDS_VERSION_PATCH 2
-#define QIDS_VERSION_STRING "1.3.3"
+#define QIDS_VERSION_PATCH 4
+#define QIDS_VERSION_STRING "1.3.4"
 
 /**
  * @brief Constant-time byte equality check.
