@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.14)
-project(qids VERSION 1.3.2 LANGUAGES C)
+project(qids VERSION 1.3.3 LANGUAGES C)
 
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)

@@ -24,7 +24,7 @@ extern "C" {
 #define QIDS_VERSION_MAJOR 1
 #define QIDS_VERSION_MINOR 3
 #define QIDS_VERSION_PATCH 2
-#define QIDS_VERSION_STRING "1.3.2"
+#define QIDS_VERSION_STRING "1.3.3"
 
 /**
  * @brief Constant-time byte equality check.

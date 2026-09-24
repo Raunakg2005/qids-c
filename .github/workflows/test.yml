@@ -1,0 +1,45 @@
+name: test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  c:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: README manual build (make, then make test)
+        run: make && make test
+
+      - name: CMake build + ctest
+        run: |
+          cmake -S . -B build
+          cmake --build build
+          ctest --test-dir build --output-on-failure
+
+      - name: README quickstart compiles (-Werror) and runs
+        run: |
+          python3 - > quickstart.c <<'PY'
+          import re
+          print(re.search(r"## Quickstart.*?```c\n(.*?)```", open("README.md").read(), re.S).group(1))
+          PY
+          gcc -std=c99 -Wall -Wextra -Werror -Iinclude quickstart.c libqids.a -lm -o quickstart
+          ./quickstart
+
+      - name: Consumer project links the documented qids::qids target
+        run: |
+          mkdir -p /tmp/consumer
+          cp quickstart.c /tmp/consumer/main.c
+          cat > /tmp/consumer/CMakeLists.txt <<CMAKE
+          cmake_minimum_required(VERSION 3.14)
+          project(consumer C)
+          add_subdirectory("${GITHUB_WORKSPACE}" qids)
+          add_executable(app main.c)
+          target_link_libraries(app PRIVATE qids::qids)
+          CMAKE
+          cmake -S /tmp/consumer -B /tmp/consumer/build
+          cmake --build /tmp/consumer/build
+          /tmp/consumer/build/app
