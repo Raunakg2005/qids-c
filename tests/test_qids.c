@@ -12,6 +12,20 @@
 #include <string.h>
 #include <assert.h>
 
+static void test_version(void) {
+    printf("[*] Testing version macros agree...\n");
+    /* v1.3.3 shipped with QIDS_VERSION_PATCH 2 beside QIDS_VERSION_STRING "1.3.3". */
+    char built[32];
+    snprintf(built, sizeof built, "%d.%d.%d",
+             QIDS_VERSION_MAJOR, QIDS_VERSION_MINOR, QIDS_VERSION_PATCH);
+    if (strcmp(built, QIDS_VERSION_STRING) != 0 || strcmp(qids_version(), QIDS_VERSION_STRING) != 0) {
+        fprintf(stderr, "version mismatch: macros say %s, string says %s, qids_version() says %s\n",
+                built, QIDS_VERSION_STRING, qids_version());
+        exit(1);
+    }
+    printf("    [+] %s\n", built);
+}
+
 static void test_constant_time(void) {
     printf("[*] Testing C Constant-Time Primitives...\n");
 
@@ -107,6 +121,7 @@ int main(void) {
     printf("  QIDS C SDK v%s Verification Test Suite          \n", qids_version());
     printf("=====================================================\n");
 
+    test_version();
     test_constant_time();
     test_toeplitz_hash();
     test_sprt_detector();

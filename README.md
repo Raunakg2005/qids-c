@@ -1,6 +1,6 @@
 # QIDS C SDK (`libqids`)
 
-[![Version](https://img.shields.io/badge/version-v1.3.3-blue.svg)](https://github.com/Raunakg2005/qids-c)
+[![Version](https://img.shields.io/badge/version-v1.3.4-blue.svg)](https://github.com/Raunakg2005/qids-c)
 [![License](https://img.shields.io/badge/license-Proprietary-red.svg)](LICENSE)
 [![Standards](https://img.shields.io/badge/standard-C99%20%7C%20C%2B%2B11-emerald.svg)](include/qids.h)
 
@@ -31,7 +31,7 @@ include(FetchContent)
 FetchContent_Declare(
     qids
     GIT_REPOSITORY https://github.com/Raunakg2005/qids-c.git
-    GIT_TAG        v1.3.3
+    GIT_TAG        v1.3.4
 )
 FetchContent_MakeAvailable(qids)
 
