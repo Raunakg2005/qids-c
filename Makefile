@@ -24,8 +24,10 @@ $(SHARED_LIB): $(OBJS)
 src/%.o: src/%.c include/qids.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
+# Link the archive by path: after `make`, libqids.so is also in ., so -lqids
+# picked the shared library and ./test_qids then failed to load it at runtime.
 $(TEST_BIN): $(TEST_SRCS) $(STATIC_LIB)
-	$(CC) $(CFLAGS) $< -L. -lqids $(LDFLAGS) -o $@
+	$(CC) $(CFLAGS) $< $(STATIC_LIB) $(LDFLAGS) -o $@
 
 test: $(TEST_BIN)
 	./$(TEST_BIN)
