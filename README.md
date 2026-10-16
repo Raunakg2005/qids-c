@@ -1,6 +1,6 @@
 # QIDS C SDK (`libqids`)
 
-[![Version](https://img.shields.io/badge/version-v1.3.4-blue.svg)](https://github.com/Raunakg2005/qids-c)
+[![Version](https://img.shields.io/badge/version-v1.3.5-blue.svg)](https://github.com/Raunakg2005/qids-c)
 [![License](https://img.shields.io/badge/license-Proprietary-red.svg)](LICENSE)
 [![Standards](https://img.shields.io/badge/standard-C99%20%7C%20C%2B%2B11-emerald.svg)](include/qids.h)
 
@@ -31,7 +31,7 @@ include(FetchContent)
 FetchContent_Declare(
     qids
     GIT_REPOSITORY https://github.com/Raunakg2005/qids-c.git
-    GIT_TAG        v1.3.4
+    GIT_TAG        v1.3.5
 )
 FetchContent_MakeAvailable(qids)
 
@@ -48,6 +48,8 @@ make test
 sudo cp libqids.a /usr/local/lib/
 sudo cp include/qids.h /usr/local/include/
 ```
+
+The library is strict ISO C99 with no compiler extensions: `make strict` builds it and the tests with `-std=c99 -pedantic -Wall -Wextra -Werror`, and CI runs that with GCC and Clang.
 
 ---
 

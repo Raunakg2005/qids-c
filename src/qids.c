@@ -84,20 +84,10 @@ static const uint8_t REVERSE_BYTE_TABLE[256] = {
     0x0F, 0x8F, 0x4F, 0xCF, 0x2F, 0xAF, 0x6F, 0xEF, 0x1F, 0x9F, 0x5F, 0xDF, 0x3F, 0xBF, 0x7F, 0xFF
 };
 
+/* Carry-less 64x64 -> 128-bit multiply in two 64-bit halves. Portable C99:
+ * the unsigned __int128 path this replaced is a GNU extension, so the library
+ * failed to build with -std=c99 -pedantic -Werror. */
 static void clmul_64(uint64_t a, uint64_t b, uint64_t *hi, uint64_t *lo) {
-#if defined(__SIZEOF_INT128__)
-    unsigned __int128 r = 0;
-    unsigned __int128 a128 = a;
-    while (b > 0) {
-        if (b & 1) {
-            r ^= a128;
-        }
-        a128 <<= 1;
-        b >>= 1;
-    }
-    *hi = (uint64_t)(r >> 64);
-    *lo = (uint64_t)r;
-#else
     uint64_t r_hi = 0, r_lo = 0;
     for (int i = 0; i < 64; ++i) {
         if ((b >> i) & 1ULL) {
@@ -109,7 +99,6 @@ static void clmul_64(uint64_t a, uint64_t b, uint64_t *hi, uint64_t *lo) {
     }
     *hi = r_hi;
     *lo = r_lo;
-#endif
 }
 
 static inline int clz64(uint64_t v) {
