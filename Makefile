@@ -32,7 +32,17 @@ $(TEST_BIN): $(TEST_SRCS) $(STATIC_LIB)
 test: $(TEST_BIN)
 	./$(TEST_BIN)
 
+# The README promises C99: build the library and the tests as strict ISO C99
+# with every warning an error, so a compiler extension cannot slip back in.
+STRICT_CFLAGS = -std=c99 -pedantic -Wall -Wextra -Werror -Iinclude
+
+strict:
+	$(CC) $(STRICT_CFLAGS) -c src/qids.c -o /dev/null
+	$(CC) $(STRICT_CFLAGS) $(TEST_SRCS) $(SRCS) $(LDFLAGS) -o $(TEST_BIN)_strict
+	./$(TEST_BIN)_strict
+	rm -f $(TEST_BIN)_strict
+
 clean:
 	rm -f $(OBJS) $(STATIC_LIB) $(SHARED_LIB) $(TEST_BIN)
 
-.PHONY: all test clean
+.PHONY: all test strict clean

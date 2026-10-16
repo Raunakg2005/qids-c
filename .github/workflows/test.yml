@@ -14,6 +14,11 @@ jobs:
       - name: README manual build (make, then make test)
         run: make && make test
 
+      - name: Strict ISO C99 build (-std=c99 -pedantic -Werror), gcc and clang
+        run: |
+          make strict CC=gcc
+          make strict CC=clang
+
       - name: CMake build + ctest
         run: |
           cmake -S . -B build
